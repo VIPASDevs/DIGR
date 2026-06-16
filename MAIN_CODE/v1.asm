@@ -1,4 +1,5 @@
 extern options_text ;imports data from the options file
+extern sites_text
 
 section .bss
 	input resb 2 ;reserves 2 bytes for user-input
@@ -12,9 +13,6 @@ section .data
 
 	inputms db "INPUT: " ;input print
 	input_len equ $ - inputms ;length of input prompt
-
-	sites db 10, "Darknet Army Forum: Forum of [edgy] sellers, varying from different things | DigAI: An uncensored AI. Willing to help with any projects | WSS: A Darknet chatroom, full of a different types of people, and featured on videos from people like Tranium | Tor.Link: A site that is a hub for other sites | NEXTCCV.CC: A Darknet market ranging from pre-made scripts, to CCV | CRYPTBB: A forum and a market [FURTHER RESEARCH REQUIRED] | DEF-CON: A legal site that uses onion for protection, where those of Cybersecurity, government cyber jobs, and more come together | DIGITAL THRIFT SHOP (PL): A market selling cheap items on the Darknet ranging from fake IDs to stolen items of medium to high value | GERMANIA: A Germanic-based market selling items [FURTHER RESEARCH REQUIRED] | BLACKMARK: A market selling a high variety of items [FURTHER RESEARCH REQUIRED] | THE HIDDEN WIKI: Not a site on the Darknet but is a wiki-style hub to other sites that are Darknet| Onionindex: Not a site on the Darknet but is a site that leads to other sites that are Darknet [FURTHER RESEARCH REQUIRED] | BREAKING BAD FORUM: A forum and a market place selling items to make the illegal substance Breaking Bad revolves around, also selling recipes alike | Onionlinks: a Darknet hub that links to other Darknet sites | Onion Identity Services: A market that sells fake IDs, fake Passports, and more | Dread: An onion site themed like Reddit, the original went down and now only copy-cats are left | Excavator: A Darknet hub that leads to other sites, even those that should never be interacted with | Anubis Market: A new, small, little site of vendors/sellers [FURTHER RESEARCH REQUIRED] | Osiris Market: A small trading site [FURTHER RESEARCH REQUIRED].", 10
-	sites_len equ $ - sites ;length of sites message
 
 	document db 10, "The nature of this program is educational [for those who are not willing to get on the Darknet/Market] and a safety guide for those who are on the Darknet. The legality of this program is lawfully in a gray-zone. As it depends on the user's purpose of consuming this program.", 10
 	document_len equ $ - document ;length of documents
@@ -103,12 +101,8 @@ loop_start:
 
 ;---PRINT FOR SITES---
 	sites_option:
-			mov rax, 1 ;syswrite
-			mov rdi, 1 ;stdout
-			mov rsi, sites ;pointer to the sites message
-			mov rdx, sites_len ;pointer to the sites message
-			syscall
-		
+			call sites_text ;calls the data from the sites.asm file
+			
 			jmp loop_start
 
 ;---PRINT FOR HISTORY---
